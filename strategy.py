@@ -6,4 +6,4 @@ from delta import DeltaClient
 
 dc = DeltaClient()
 
-dc.get_tickers_by_contracts('BTCUSD','201026')
+dc.get_tickers_by_contracts('BTCUSD','20-10-2026')
