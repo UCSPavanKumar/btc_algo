@@ -8,6 +8,8 @@ dc = DeltaClient()
 strike_price = dc.decide_strike_price()
 contracts = dc.get_tickers_by_contracts('BTC','21-10-2026')
 products = contracts[contracts['strike_price']==str(strike_price)]
+if len(products)==0:
+    products = contracts[contracts['strike_price']==str(strike_price-100)]
 ids = products['product_id'].to_list()
 print(ids)
 dc.place_basket_order(ids)
