@@ -1,7 +1,6 @@
 from dotenv import load_dotenv  
 from access import get_secret
 load_dotenv()
-import math
 import os
 from delta import DeltaClient
 
