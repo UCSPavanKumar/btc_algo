@@ -21,7 +21,6 @@ class DeltaClient:
                          params={},
                          headers=self.headers)
         data = r.json()
-        print(data)
         return data['result']['close']
 
     def get_signature(self,secret,message):

@@ -9,8 +9,7 @@ dc = DeltaClient()
 ltp = dc.get_current_price('BTCUSD')
 strike_price = math.ceil(ltp/100)*100
 data = dc.get_tickers_by_contracts('BTC','21-10-2026')
-print(data)
 print("LTP: ",ltp,"Strike Price :",strike_price)
 products = data[data['strike_price']==str(strike_price)]
-print(products['product_id'].to_list())
-#dc.place_basket_order([158952,158962])
+ids = products['product_id'].to_list()
+dc.place_basket_order(ids
