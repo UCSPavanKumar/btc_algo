@@ -18,5 +18,6 @@ class DeltaClient:
                             'Accept':'application/json'
                         },
                         timeout=50)
+        print(r.url)
         print(r.json())
 
