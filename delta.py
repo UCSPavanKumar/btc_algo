@@ -2,6 +2,7 @@ from access import get_secret
 import requests
 import os
 import time
+import math
 import hmac
 import json
 import hashlib
@@ -81,4 +82,10 @@ class DeltaClient:
         print(call_sell)
         print(put_sell)
         return (call_sell['success'],put_sell['success'])
+
+    def decide_strike_price(self):
+        ltp = self.get_current_price('BTCUSD')
+        strike_price = math.floor(ltp/100)*100
+        print({'ltp':ltp,'strike_price':strike_price})
+        return strike_price
 
