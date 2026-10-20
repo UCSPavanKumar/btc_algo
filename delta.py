@@ -70,6 +70,8 @@ class DeltaClient:
     def place_basket_order(self,product_ids):
         call_sell = self.place_market_order(product_ids[0])
         put_sell = self.place_market_order(product_ids[1])
+        print(call_sell)
+        print(put_sell)
         return (call_sell['success'],put_sell['success'])
 
 
