@@ -12,7 +12,7 @@ class DeltaClient:
     def get_tickers_by_contracts(self,asset,expiry_date):
         r = requests.get(self.prod_url+'/v2/tickers',
                          params={'contract_types':'call_options',
-                                 'underlying_asset_symbol':asset,
+                                 'underlying_asset_symbols':asset,
                                  'expiry_date':expiry_date},
                         headers={
                             'Accept':'application/json'
