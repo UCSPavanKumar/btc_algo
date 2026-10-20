@@ -1,17 +1,29 @@
 from access import get_secret
 import requests
 import os
+import time
+import hmac
+import json
+import hashlib
+import pandas as pd
 from dotenv import load_dotenv
 load_dotenv
+from endpoints import ORDERS
 class DeltaClient:
     def __init__(self):
         self.secrets = get_secret()
         self.prod_url = os.getenv('PROD_URL')
+        self.orders = ORDERS
 
+    def get_signature(self,secret,message):
+        message = bytes(message,'UTF-8')
+        secret = bytes(secret,'UTF-8')
+        hash = hmac.new(secret,message,hashlib.sha256)
+        return hash.hexdigest()
 
     def get_tickers_by_contracts(self,asset,expiry_date):
         r = requests.get(self.prod_url+'/v2/tickers',
-                         params={'contract_types':'call_options',
+                         params={'contract_types':'call_options,put_options',
                                  'underlying_asset_symbols':asset,
                                  'expiry_date':expiry_date},
                         headers={
@@ -21,3 +33,38 @@ class DeltaClient:
         print(r.url)
         print(r.json())
 
+    def place_market_order(self,product_id):
+        method='POST'
+        timestamp=str(int(time.time()))
+        path = self.orders
+        url = f'{self.prod_url}{path}'
+        query_string=''
+        payload = json.dumps(
+            {
+                'order_type':'market_order',
+                'size':1,
+                'side':'sell',
+                'product_id':158962
+            }
+        )
+        signature_data = method+timestamp+path+query_string+payload
+        signature = self.get_signature(self.secrets[1],signature_data)
+        req_headers = {
+            'api-key':self.secrets[0],
+            'timestamp':timestamp,
+            'signature':signature,
+            'User-Agent':'pavan-btc-algo',
+            'Content-Type':'application/json'
+        }
+        response = requests.request(
+            method,
+            url,
+            data=payload,
+            params={},
+            timeout=(3,27),
+            headers=req_headers
+        )
+        print(response.json())
+
+
+        
