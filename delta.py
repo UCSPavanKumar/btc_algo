@@ -83,5 +83,3 @@ class DeltaClient:
         print(put_sell)
         return (call_sell['success'],put_sell['success'])
 
-
-        
