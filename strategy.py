@@ -7,4 +7,4 @@ from delta import DeltaClient
 
 dc = DeltaClient()
 #data = dc.get_tickers_by_contracts('BTC','21-10-2026')
-dc.place_market_order([158942,158962])
+dc.place_basket_order([158942,158962])
