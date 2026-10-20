@@ -30,7 +30,9 @@ class DeltaClient:
                             'Accept':'application/json'
                         },
                         timeout=50)
-        return r.json()
+        df = pd.DataFrame(r.json()['result'])
+        df = df[['product_id','symbol','strike_price']]
+        return df
 
     def place_market_order(self,product_id):
         method='POST'
