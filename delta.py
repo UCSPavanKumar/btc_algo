@@ -30,8 +30,7 @@ class DeltaClient:
                             'Accept':'application/json'
                         },
                         timeout=50)
-        print(r.url)
-        print(r.json())
+        return r.json()
 
     def place_market_order(self,product_id):
         method='POST'
@@ -44,7 +43,7 @@ class DeltaClient:
                 'order_type':'market_order',
                 'size':1,
                 'side':'sell',
-                'product_id':158962
+                'product_id':int(product_id)
             }
         )
         signature_data = method+timestamp+path+query_string+payload
