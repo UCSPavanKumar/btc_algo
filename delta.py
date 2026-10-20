@@ -65,7 +65,12 @@ class DeltaClient:
             timeout=(3,27),
             headers=req_headers
         )
-        print(response.json())
+        return response.json()
+
+    def place_basket_order(self,product_ids):
+        call_sell = self.place_market_order(product_ids[0])
+        put_sell = self.place_market_order(product_ids[1])
+        return (call_sell['success'],put_sell['success'])
 
 
         
