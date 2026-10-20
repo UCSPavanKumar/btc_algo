@@ -5,6 +5,8 @@ charset-normalizer==3.5.2
 delta-rest-client==1.0.14
 idna==3.20
 jmespath==1.1.0
+numpy==2.5.4
+pandas==3.0.6
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.4
 requests==2.34.2
