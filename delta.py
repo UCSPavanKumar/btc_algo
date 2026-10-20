@@ -8,12 +8,21 @@ import hashlib
 import pandas as pd
 from dotenv import load_dotenv
 load_dotenv
-from endpoints import ORDERS
+from endpoints import ORDERS,TICKERS
 class DeltaClient:
     def __init__(self):
         self.secrets = get_secret()
         self.prod_url = os.getenv('PROD_URL')
         self.orders = ORDERS
+        self.headers={'Accept':'application/json'}
+
+    def get_current_price(self,symbol):
+        r = requests.get(f'{self.prod_url}{TICKERS}/{symbol}',
+                         params={},
+                         headers=self.headers)
+        data = r.json()
+        print(data)
+        return data['result']['close']
 
     def get_signature(self,secret,message):
         message = bytes(message,'UTF-8')
