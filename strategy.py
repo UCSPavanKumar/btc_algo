@@ -7,8 +7,10 @@ from delta import DeltaClient
 
 dc = DeltaClient()
 expiry_date = datetime.now().strftime('%d-%m-%Y')
+data = dc.get_products_by_symbol('BTCUSD')
+print(data)
 strike_price = dc.decide_strike_price()
-contracts = dc.get_tickers_by_contracts('BTC',expiry_date,'call_options,put_options')
+contracts = dc.get_tickers_by_contracts('BTC',expiry_date,'perpetual_futures')
 products = contracts[contracts['strike_price']==str(strike_price)]
 if len(products)==0:
     products = contracts[contracts['strike_price']==str(strike_price-100)]

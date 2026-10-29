@@ -9,12 +9,13 @@ import hashlib
 import pandas as pd
 from dotenv import load_dotenv
 load_dotenv
-from endpoints import ORDERS,TICKERS
+from endpoints import ORDERS,TICKERS,PRODUCTS
 class DeltaClient:
     def __init__(self):
         self.secrets = get_secret()
         self.prod_url = os.getenv('PROD_URL')
         self.orders = ORDERS
+        self.products = PRODUCTS
         self.headers={'Accept':'application/json'}
 
     def get_current_price(self,symbol):
@@ -89,5 +90,10 @@ class DeltaClient:
         print({'ltp':ltp,'strike_price':strike_price})
         return strike_price
 
-
+    def get_products_by_symbol(self,symbol:str):
+        r = requests.get(f'{self.prod_url}{PRODUCTS}/{symbol}',
+                                 params={},
+                                 headers=self.headers)
+        data = r.json()
+        return data
 
