@@ -30,9 +30,9 @@ class DeltaClient:
         hash = hmac.new(secret,message,hashlib.sha256)
         return hash.hexdigest()
 
-    def get_tickers_by_contracts(self,asset,expiry_date):
+    def get_tickers_by_contracts(self,asset,expiry_date,contract_types):
         r = requests.get(self.prod_url+'/v2/tickers',
-                         params={'contract_types':'call_options,put_options',
+                         params={'contract_types':contract_types,
                                  'underlying_asset_symbols':asset,
                                  'expiry_date':expiry_date},
                         headers={
@@ -88,4 +88,6 @@ class DeltaClient:
         strike_price = math.floor(ltp/100)*100
         print({'ltp':ltp,'strike_price':strike_price})
         return strike_price
+
+
 
